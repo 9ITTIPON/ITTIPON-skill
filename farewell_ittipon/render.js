@@ -32,11 +32,11 @@ function renderFarewell(data) {
     prole.innerHTML = `
       <div style="margin-bottom:12px;">${data.profile.role}</div>
       <a href="${data.profile.linkedin}" target="_blank" 
-         style="color:#000; background:var(--b); text-decoration:none; font-size:12px; font-weight:700; 
-                padding:10px 20px; border-radius:6px; display:inline-block; 
-                box-shadow:0 0 15px rgba(56,189,248,0.4); transition:all 0.3s ease;
-                letter-spacing:1px; text-transform:uppercase;">
-        LINKEDIN CONNECT ↗
+         style="color:#000; background:var(--b); text-decoration:none; font-size:11px; font-weight:700; 
+                width:130px; padding:12px 0; border-radius:8px; display:inline-block; text-align:center;
+                box-shadow:0 0 20px rgba(56,189,248,0.5); transition:all 0.3s ease;
+                letter-spacing:0.5px; text-transform:uppercase;">
+        LINKEDIN ↗
       </a>
     `;
   }
