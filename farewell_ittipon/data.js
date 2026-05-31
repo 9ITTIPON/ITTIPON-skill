@@ -10,7 +10,8 @@ const FAREWELL_DATA = {
   },
   "profile": {
     "name": "DATA_ENGINEER.py",
-    "role": "Krungsri · 2.5y runtime"
+    "role": "Krungsri · 2.5y runtime",
+    "linkedin": "https://www.linkedin.com/in/ittipon-luakananun-1b5a661a4/"
   },
   "farewell_script": {
     "title": "farewell_pipeline.py",

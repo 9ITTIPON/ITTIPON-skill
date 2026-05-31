@@ -28,7 +28,12 @@ function renderFarewell(data) {
   const pname = document.querySelector('.pname');
   if (pname) pname.textContent = data.profile.name;
   const prole = document.querySelector('.prole');
-  if (prole) prole.textContent = data.profile.role;
+  if (prole) {
+    prole.innerHTML = `
+      ${data.profile.role}<br>
+      <a href="${data.profile.linkedin}" target="_blank" style="color:var(--b);text-decoration:none;font-size:9px;margin-top:4px;display:inline-block;border:1px solid rgba(56,189,248,0.3);padding:2px 8px;border-radius:4px;">LINKEDIN CONNECT ↗</a>
+    `;
+  }
 
   // 3. Python Block
   const pyBar = document.querySelector('.py-bar');
