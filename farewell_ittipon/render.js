@@ -30,8 +30,14 @@ function renderFarewell(data) {
   const prole = document.querySelector('.prole');
   if (prole) {
     prole.innerHTML = `
-      ${data.profile.role}<br>
-      <a href="${data.profile.linkedin}" target="_blank" style="color:var(--b);text-decoration:none;font-size:9px;margin-top:4px;display:inline-block;border:1px solid rgba(56,189,248,0.3);padding:2px 8px;border-radius:4px;">LINKEDIN CONNECT ↗</a>
+      <div style="margin-bottom:12px;">${data.profile.role}</div>
+      <a href="${data.profile.linkedin}" target="_blank" 
+         style="color:#000; background:var(--b); text-decoration:none; font-size:12px; font-weight:700; 
+                padding:10px 20px; border-radius:6px; display:inline-block; 
+                box-shadow:0 0 15px rgba(56,189,248,0.4); transition:all 0.3s ease;
+                letter-spacing:1px; text-transform:uppercase;">
+        LINKEDIN CONNECT ↗
+      </a>
     `;
   }
 
