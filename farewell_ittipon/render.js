@@ -2,7 +2,8 @@ function renderFarewell(data) {
   // 1. Stats and Header
   const titleEl = document.querySelector('.py-title');
   if (titleEl) {
-    titleEl.innerHTML = `KRUNGSRI_<span class="dag">${data.stats.dag_id.replace('KRUNGSRI_', '')}</span>`;
+    const dagPart = data.stats.dag_id.replace('KRUNGSRI_', '');
+    titleEl.innerHTML = `KRUNGSRI_<span class="dag">${dagPart}</span> <span class="highlight-farewell">FAREWELL</span>`;
   }
   
   const subEl = document.querySelector('.py-sub');

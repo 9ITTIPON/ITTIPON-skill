@@ -87,16 +87,24 @@ body::after{
 /* left */
 .file-chip{
   display:inline-flex;align-items:center;gap:8px;
-  background:rgba(5,240,160,0.07);border:1px solid rgba(5,240,160,0.2);
-  border-radius:5px;padding:4px 12px;
-  font-size:11px;color:var(--g);letter-spacing:1.5px;
+  background:rgba(56,189,248,0.1);border:1px solid var(--b);
+  border-radius:5px;padding:6px 16px;
+  font-size:12px;color:var(--b);letter-spacing:1px;
   margin-bottom:20px;
+  font-weight:600;
+  text-transform:uppercase;
 }
-.file-chip::before{content:'▶';font-size:9px;}
+.file-chip::before{content:'●';font-size:10px;animation: blink 1s infinite;}
 
-.py-title{font-size:clamp(22px,4vw,36px);font-weight:600;color:var(--white);line-height:1.2;margin-bottom:6px;}
+.py-title{font-size:clamp(24px,5vw,42px);font-weight:600;color:var(--white);line-height:1.2;margin-bottom:12px;}
 .py-title .dag{color:var(--g);}
-.py-sub{font-size:12px;color:var(--dim);margin-bottom:28px;line-height:1.8;}
+.py-title .highlight-farewell {
+  color: var(--y);
+  text-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+  font-weight: 700;
+  padding: 0 4px;
+}
+.py-sub{font-size:14px;color:var(--mid);margin-bottom:28px;line-height:1.8;}
 
 /* ── STATUS ROW ── */
 .status-row{
