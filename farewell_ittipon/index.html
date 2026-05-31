@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>farewell.py — KRUNGSRI_CAREER_JOURNEY</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300&family=IBM+Plex+Sans+Thai:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0b0f1a;
+  --ink2: #111827;
+  --ink3: #1a2337;
+  --wire: #1f2f4a;
+  --wire2: #263650;
+  --g: #05f0a0;
+  --g2: #00c87a;
+  --b: #38bdf8;
+  --v: #818cf8;
+  --y: #fbbf24;
+  --r: #f87171;
+  --dim: #4a6080;
+  --mid: #7b90b0;
+  --lit: #c8ddf5;
+  --white: #eef4ff;
+  --mono: 'IBM Plex Mono', monospace;
+  --thai: 'IBM Plex Sans Thai', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--ink);
+  color:var(--lit);
+  font-family:var(--mono);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.6;
+}
+
+/* ── SCAN LINES ── */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,transparent 2px,
+    rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
+  );
+  pointer-events:none;z-index:0;
+}
+
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:0 24px 60px;}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:sticky;top:0;z-index:99;
+  background:rgba(11,15,26,0.93);
+  border-bottom:1px solid var(--wire);
+  backdrop-filter:blur(16px);
+  padding:0 24px;
+  display:flex;align-items:center;height:40px;gap:10px;
+  font-size:11px;color:var(--dim);
+  letter-spacing:0.5px;
+}
+.tb-dots{display:flex;gap:5px;margin-right:4px;}
+.tb-dot{width:9px;height:9px;border-radius:50%;}
+.tb-r{background:#ff5f57;}.tb-y{background:#ffbd2e;}.tb-g{background:#28ca41;}
+.tb-path{color:var(--mid);}
+.tb-path em{color:var(--g);font-style:normal;}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.live{width:5px;height:5px;border-radius:50%;background:var(--g);animation:blink 1.6s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.15}}
+
+/* ── HEADER — profile + python filename ── */
+.hdr{
+  padding-top:48px;
+  display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;
+}
+@media(max-width:560px){.hdr{grid-template-columns:1fr;}.profile-col{display:flex;flex-direction:column;align-items:center;margin:0 auto;}}
+
+/* left */
+.file-chip{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(5,240,160,0.07);border:1px solid rgba(5,240,160,0.2);
+  border-radius:5px;padding:4px 12px;
+  font-size:11px;color:var(--g);letter-spacing:1.5px;
+  margin-bottom:20px;
+}
+.file-chip::before{content:'▶';font-size:9px;}
+
+.py-title{font-size:clamp(22px,4vw,36px);font-weight:600;color:var(--white);line-height:1.2;margin-bottom:6px;}
+.py-title .dag{color:var(--g);}
+.py-sub{font-size:12px;color:var(--dim);margin-bottom:28px;line-height:1.8;}
+
+/* ── STATUS ROW ── */
+.status-row{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;
+}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 11px;border-radius:4px;font-size:11px;letter-spacing:0.5px;
+  border:1px solid;
+}
+.badge-ok{background:rgba(5,240,160,0.08);border-color:rgba(5,240,160,0.25);color:var(--g);}
+.badge-blue{background:rgba(56,189,248,0.08);border-color:rgba(56,189,248,0.25);color:var(--b);}
+.badge-v{background:rgba(129,140,248,0.08);border-color:rgba(129,140,248,0.25);color:var(--v);}
+.badge-y{background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.25);color:var(--y);}
+
+/* profile right */
+.profile-col{flex-shrink:0;}
+.profile-ring{
+  width:130px;height:130px;border-radius:50%;
+  background:conic-gradient(var(--g),var(--b),var(--v),var(--g));
+  padding:2.5px;
+  animation:ring-spin 10s linear infinite;
+  box-shadow:0 0 28px rgba(5,240,160,0.25);
+}
+@keyframes ring-spin{to{transform:rotate(360deg);}}
+.profile-inner{
+  width:100%;height:100%;border-radius:50%;
+  overflow:hidden;border:3px solid var(--ink);
+}
+.profile-inner img{width:100%;height:100%;object-fit:cover;object-position:top center;}
+.profile-meta{margin-top:10px;text-align:center;}
+.pname{font-size:11px;color:var(--g);letter-spacing:1px;}
+.prole{font-size:10px;color:var(--dim);margin-top:2px;}
+
+/* ── DIVIDER ── */
+.hr{
+  border:none;height:1px;background:var(--wire);
+  margin:36px 0;position:relative;
+}
+.hr[data-lbl]::after{
+  content:attr(data-lbl);
+  position:absolute;left:0;top:50%;transform:translateY(-50%);
+  background:var(--ink);padding-right:14px;
+  font-size:10px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;
+}
+
+/* ── PYTHON BLOCK ── */
+.py-block{
+  background:var(--ink2);
+  border:1px solid var(--wire);
+  border-radius:8px;overflow:hidden;
+  box-shadow:0 2px 24px rgba(0,0,0,0.5);
+}
+.py-bar{
+  background:var(--ink3);
+  padding:8px 14px;border-bottom:1px solid var(--wire);
+  display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim);
+}
+.py-fdot{width:6px;height:6px;border-radius:50%;background:var(--y);}
+.py-code{padding:20px 22px;font-size:12.5px;line-height:2;overflow-x:auto;}
+.c{color:#3a5070;font-style:italic;}  /* comment */
+.kw{color:var(--v);font-weight:600;}
+.fn{color:var(--b);}
+.s{color:var(--y);}
+.n{color:var(--r);}
+.v{color:var(--lit);}
+.op{color:var(--dim);}
+
+/* output */
+.py-out{
+  border-top:1px solid var(--wire);
+  padding:14px 22px;
+  background:rgba(0,0,0,0.25);
+}
+.out-hd{font-size:10px;color:var(--dim);letter-spacing:1.5px;margin-bottom:8px;}
+.ok{color:var(--g);line-height:1.9;font-size:12px;}
+.od{color:var(--dim);font-size:11px;margin-top:6px;}
+
+/* ── PIPELINE INFOGRAPHIC ── */
+.pipeline{
+  background:var(--ink2);border:1px solid var(--wire);
+  border-radius:8px;padding:28px 24px;
+  position:relative;overflow:hidden;
+}
+.pipeline::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%, rgba(5,240,160,0.04) 0%, transparent 60%);
+  pointer-events:none;
+}
+
+/* horizontal flow */
+.pipe-flow{
+  display:flex;align-items:stretch;
+  gap:0;
+  overflow-x:auto;
+  padding-bottom:4px;
+}
+.pipe-node{
+  display:flex;flex-direction:column;align-items:center;
+  flex:1;min-width:100px;
+  position:relative;
+}
+/* connector line */
+.pipe-node:not(:last-child)::after{
+  content:'';
+  position:absolute;
+  top:28px;right:-50%;
+  width:100%;height:2px;
+  background:linear-gradient(90deg, var(--g2), rgba(5,240,160,0.2));
+  z-index:0;
+}
+.pipe-icon{
+  width:56px;height:56px;
+  background:var(--ink3);border:1.5px solid var(--wire2);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;position:relative;z-index:1;
+  box-shadow:0 0 0 4px var(--ink2);
+  transition:border-color 0.3s;
+}
+.pipe-node.done .pipe-icon{
+  border-color:var(--g2);
+  box-shadow:0 0 0 4px var(--ink2), 0 0 12px rgba(5,240,160,0.2);
+}
+.pipe-node.current .pipe-icon{
+  border-color:var(--b);
+  box-shadow:0 0 0 4px var(--ink2), 0 0 16px rgba(56,189,248,0.3);
+  animation:current-pulse 2s infinite;
+}
+@keyframes current-pulse{
+  0%,100%{box-shadow:0 0 0 4px var(--ink2), 0 0 14px rgba(56,189,248,0.25);}
+  50%{box-shadow:0 0 0 4px var(--ink2), 0 0 26px rgba(56,189,248,0.5);}
+}
+.pipe-tick{
+  position:absolute;top:-5px;right:-5px;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--g);color:#000;
+  font-size:9px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  z-index:2;
+}
+.pipe-label{margin-top:10px;font-size:10px;color:var(--mid);text-align:center;line-height:1.4;letter-spacing:0.3px;}
+.pipe-label strong{display:block;color:var(--lit);font-size:11px;margin-bottom:2px;}
+
+/* timeline */
+.timeline{margin-top:32px;position:relative;padding-left:20px;}
+.timeline::before{
+  content:'';position:absolute;left:6px;top:6px;bottom:6px;
+  width:1px;background:var(--wire2);
+}
+.tl-item{
+  display:flex;gap:16px;align-items:flex-start;
+  margin-bottom:20px;position:relative;
+}
+.tl-item:last-child{margin-bottom:0;}
+.tl-dot{
+  width:13px;height:13px;border-radius:50%;
+  flex-shrink:0;margin-top:3px;
+  border:2px solid var(--ink2);
+  position:relative;z-index:1;
+  margin-left:-20px;
+}
+.tl-dot.ok{background:var(--g);box-shadow:0 0 8px rgba(5,240,160,0.5);}
+.tl-dot.ok2{background:var(--b);box-shadow:0 0 8px rgba(56,189,248,0.4);}
+.tl-dot.fin{background:var(--v);box-shadow:0 0 8px rgba(129,140,248,0.4);}
+.tl-body{flex:1;}
+.tl-time{font-size:10px;color:var(--dim);margin-bottom:2px;}
+.tl-text{font-size:12px;color:var(--lit);line-height:1.6;}
+.tl-tag{
+  display:inline-block;margin-top:4px;
+  padding:2px 8px;border-radius:3px;font-size:10px;
+  background:rgba(5,240,160,0.08);color:var(--g);border:1px solid rgba(5,240,160,0.2);
+}
+
+/* ── FAREWELL MESSAGE ── */
+.msg-card{
+  background:var(--ink2);border:1px solid var(--wire);
+  border-radius:8px;padding:28px 28px 24px;
+  position:relative;overflow:hidden;
+}
+.msg-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg, var(--b), var(--v), var(--g));
+}
+.msg-text{
+  font-family:var(--thai);font-size:16px;line-height:2.1;
+  color:var(--white);margin-bottom:20px;font-weight:300;
+}
+.msg-text strong{font-weight:600;color:var(--g);}
+.msg-foot{
+  font-size:11px;color:var(--dim);padding-top:14px;
+  border-top:1px solid var(--wire);
+  display:flex;align-items:center;gap:6px;
+}
+.msg-foot::before{content:'$';color:var(--g);}
+
+/* ── TERMINAL (inline output) ── */
+.term{
+  background:#060a12;border:1px solid var(--wire);
+  border-radius:8px;overflow:hidden;
+}
+.term-bar{
+  background:var(--ink3);padding:8px 14px;
+  border-bottom:1px solid var(--wire);
+  display:flex;align-items:center;gap:7px;font-size:11px;color:var(--dim);
+}
+.tdot{width:9px;height:9px;border-radius:50%;}
+.tdot:nth-child(1){background:#ff5f57;}.tdot:nth-child(2){background:#ffbd2e;}.tdot:nth-child(3){background:#28ca41;}
+.term-body{padding:16px 18px;min-height:200px;font-size:12px;}
+.tl2{margin-bottom:4px;opacity:0;line-height:1.7;}
+.tl2.show{animation:fi 0.25s forwards;}
+@keyframes fi{to{opacity:1;}}
+.tp{color:var(--g2);}
+.ti{color:var(--b);}
+.tw{color:var(--y);}
+.ts{color:var(--g);}
+.tc{color:var(--dim);font-style:italic;}
+.cur{
+  display:inline-block;width:7px;height:12px;
+  background:var(--g);vertical-align:text-bottom;
+  animation:cblink 1s infinite;
+}
+@keyframes cblink{0%,100%{opacity:1}50%{opacity:0;}}
+
+/* ── SUCCESS ── */
+.success-wrap{text-align:center;padding:40px 0 20px;}
+.success-box{
+  display:inline-block;
+  border:1.5px solid var(--g);border-radius:10px;
+  padding:28px 44px;position:relative;
+  box-shadow:0 0 40px rgba(5,240,160,0.12);
+  animation:spulse 2.5s infinite;
+}
+@keyframes spulse{
+  0%,100%{box-shadow:0 0 30px rgba(5,240,160,0.1);}
+  50%{box-shadow:0 0 55px rgba(5,240,160,0.28);}
+}
+.s-check{
+  position:absolute;top:-12px;right:-12px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--g);color:#000;font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 14px var(--g);
+}
+.s-title{
+  font-size:clamp(13px,3vw,20px);font-weight:600;
+  color:var(--g);letter-spacing:3px;text-transform:uppercase;
+  text-shadow:0 0 16px rgba(5,240,160,0.4);
+  margin-bottom:6px;
+}
+.s-sub{font-size:10px;color:var(--dim);letter-spacing:2px;}
+
+/* ── FOOTER ── */
+.foot{
+  border-top:1px solid var(--wire);padding-top:24px;margin-top:20px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+  font-size:11px;color:var(--dim);
+}
+.foot strong{color:var(--lit);display:block;margin-bottom:2px;}
+.conn{display:flex;align-items:center;gap:6px;}
+.conn-dot{width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 5px var(--g);animation:blink 1.4s infinite;}
+.conn-txt{color:var(--g);}
+
+/* REVEAL */
+.r{opacity:0;transform:translateY(14px);transition:opacity 0.55s ease,transform 0.55s ease;}
+.r.v{opacity:1;transform:none;}
+.r.d1{transition-delay:0.1s;}.r.d2{transition-delay:0.2s;}.r.d3{transition-delay:0.3s;}
+
+/* PARTICLES */
+#pts{position:fixed;inset:0;pointer-events:none;z-index:0;}
+.pt{
+  position:absolute;width:1.5px;height:1.5px;
+  border-radius:50%;opacity:0;
+  animation:fup linear infinite;
+}
+@keyframes fup{
+  0%{transform:translateY(100vh);opacity:0;}
+  8%{opacity:0.5;}90%{opacity:0.3;}
+  100%{transform:translateY(-10px) translateX(var(--dr));opacity:0;}
+}
+</style>
+</head>
+<body>
+<div id="pts"></div>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <div class="tb-dots">
+    <div class="tb-dot tb-r"></div>
+    <div class="tb-dot tb-y"></div>
+    <div class="tb-dot tb-g"></div>
+  </div>
+  <span class="tb-path">~/krungsri/<em>farewell.py</em></span>
+  <div class="tb-right">
+    <div class="live"></div>
+    <span style="color:var(--g);font-size:11px;">exit_code: 0</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-left">
+    <div class="file-chip">farewell.py</div>
+    <h1 class="py-title"></h1>
+    <p class="py-sub"></p>
+    <div class="status-row"></div>
+  </div>
+  <div class="profile-col r">
+    <div class="profile-ring">
+      <div class="profile-inner">
+        <img id="pimg" src="profileksc.jpg" alt="Data Engineer"/>
+      </div>
+    </div>
+    <div class="profile-meta">
+      <div class="pname"></div>
+      <div class="prole"></div>
+    </div>
+  </div>
+</header>
+
+<hr class="hr r d1" data-lbl="01 · farewell.py">
+
+<!-- PYTHON FAREWELL SCRIPT -->
+<div class="py-block r d2">
+  <div class="py-bar"></div>
+  <div class="py-code"></div>
+  <div class="py-out"></div>
+</div>
+
+<hr class="hr r" data-lbl="02 · career pipeline">
+
+<!-- PIPELINE INFOGRAPHIC -->
+<div class="pipeline r">
+  <div class="pipe-flow"></div>
+  <div class="timeline"></div>
+</div>
+
+<hr class="hr r" data-lbl="03 · success">
+
+<!-- SUCCESS -->
+<div class="success-wrap r">
+  <div class="success-box">
+    <div class="s-check">✓</div>
+    <div style="font-size:36px;margin-bottom:10px;">🎉</div>
+    <div class="s-title"></div>
+    <div class="s-sub"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="foot r"></footer>
+
+</div><!-- /wrap -->
+
+<script src="data.js"></script>
+<script src="render.js"></script>
+<script>
+// Particles
+const pc=document.getElementById('pts');
+for(let i=0;i<14;i++){
+  const p=document.createElement('div');p.className='pt';
+  p.style.left=Math.random()*100+'vw';
+  p.style.background=Math.random()>0.5?'#05f0a0':'#38bdf8';
+  p.style.animationDuration=(10+Math.random()*16)+'s';
+  p.style.animationDelay=(Math.random()*14)+'s';
+  p.style.setProperty('--dr',(Math.random()*50-25)+'px');
+  pc.appendChild(p);
+}
+
+// Reveal
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
